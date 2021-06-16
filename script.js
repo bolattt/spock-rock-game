@@ -1,3 +1,4 @@
+import { startConfetti, stopConfetti, removeConfetti } from "./confetti.js";
 const playerScoreEl = document.getElementById("playerScore");
 const playerChoiceEl = document.getElementById("playerChoice");
 const computerScoreEl = document.getElementById("computerScore");
@@ -48,6 +49,7 @@ function resetAll() {
   computerChoiceEl.textContent = "";
   resultText.textContent = "Let's start!";
 }
+window.resetAll = resetAll;
 
 // Random Computer Choice
 function computerRandomChoice() {
@@ -103,10 +105,13 @@ function updateScore(playerChoice) {
     console.log(choice.defeats.indexOf(computerChoice));
     if (choice.defeats.indexOf(computerChoice) > -1) {
       resultText.textContent = "You Won!";
+      startConfetti();
       playerScoreNumber++;
       playerScoreEl.textContent = playerScoreNumber;
     } else {
       resultText.textContent = "You Lost!";
+      stopConfetti();
+      removeConfetti();
       computerScoreNumber++;
       computerScoreEl.textContent = computerScoreNumber;
     }
@@ -150,6 +155,8 @@ function select(playerChoice) {
       break;
   }
 }
+
+window.select = select;
 
 // On load
 resetAll();
